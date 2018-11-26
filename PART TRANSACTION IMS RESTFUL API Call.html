@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>PART Description Web Application</title>
+	<style>
+		body {background-color: orange;}
+		h1 {color: white;}
+		h1 {font-family:verdana;}
+				
+		p {color: gray;}
+		p {font-family:verdana;}
+	</style>
+	<meta charset="UTF-8">
+	<meta name="description" content="PART Description Web Application">
+	<meta name="author" content="Subhasish Sarkar">
+	<meta http-equiv="refresh" content="30">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+		function validateForm() {
+			var PartNumberValidation = document.forms["myForm"]["PartNumber"].value;
+			if (PartNumberValidation == "") {
+				alert("Please enter a PART Number !!!");
+				return false;
+			}
+			else {
+				var PartNo = document.getElementById("PartNumberID").value;
+				var url = 'http://IMSA.BMC.COM:9080/part-transaction-api-project9/GETPARTInformation5/' + PartNo;
+				var request = new XMLHttpRequest();
+				request.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						console.log("Status " + this.status);
+						if (request.status == 200) {
+							console.log("Response Text " + this.responseText);
+							alert(this.responseText);
+						}
+					}
+				};
+				request.open("GET", url, true);
+				request.setRequestHeader("Authorization", "Basic TVZTU0FTMzpTVUtBTllBMw==");
+				request.send();
+				return false;
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<a href="https://www.bmc.com/" target="_blank">
+		<img src="bmc_logo_RGB.jpg" alt="BMC Logo couldn't be loaded !!!" style="width:100px;height:75px;border:0;">
+	</a>
+	<h1>PART Description Web Application</h1>
+	<p><b>This is a very, very simple Web Application that takes in a PART Number as the input from the user and then returns you the Part's description.</b></p>
+	<br>
+	<form name="myForm" onsubmit="return validateForm()">
+		PART Number:<br>
+		<input type="text" name="PartNumber" id="PartNumberID" maxlength="8" autofocus><br>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+
+</html>
